@@ -1,0 +1,26 @@
+{
+  "pages": [
+    "pages/bleScan/bleScan",
+    "pages/lockFun/lockFun"
+  ],
+  "plugins": {
+    "myPlugin": {
+      "version": "1.0.2",
+      "provider": "wx8c85a8eeaad80bbf"
+    }
+  },
+  "window": {
+    "enablePullDownRefresh": true,
+    "backgroundColor": "#cccccc",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "智联公寓",
+    "navigationBarTextStyle": "black"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  },
+  "sitemapLocation": "sitemap.json"
+}

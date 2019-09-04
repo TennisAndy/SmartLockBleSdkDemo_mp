@@ -1,0 +1,57 @@
+/* pages/bindLock/bindLock.wxss */
+
+.container {
+  height: 100vh;
+  width: 100%;
+  background: #f6f7f6;
+}
+
+.lock-info {
+  width: 100%;
+  display: flex;
+  margin-top: 24rpx;
+  background: #fff;
+  flex-direction: column;
+
+  align-items: center;
+}
+
+.line-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.line {
+  width: 90%;
+  height: 1rpx;
+  margin-left: 5%;
+  background-color: lightgray;
+}
+
+.type, .mac, .label {
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 18rpx;
+  margin-bottom: 18rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.mac, .label {
+  margin-bottom: 16rpx;
+  margin-right: 16rpx;
+}
+
+.row{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 20rpx;
+}
+
+.button-action{
+  width: 45%;
+}

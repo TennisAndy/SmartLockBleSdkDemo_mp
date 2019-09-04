@@ -1,0 +1,55 @@
+<!--pages/bindLock/bindLock.wxml-->
+<view class="container">
+  <view class="lock-info">
+    <view class="line-container">
+      <text class="mac">设备MAC</text>
+      <text class="type">{{lock.mac}}</text>
+    </view>
+    <view class="line-container">
+      <view class="line" />
+    </view>
+    <view class="line-container">
+      <text class="mac">设备类型</text>
+      <text class="type">{{lock.lockType}}</text>
+    </view>
+  </view>
+
+  <view class='row'>
+    <button class="button-action" type='primary' bindtap="bindLock" disabled="{{isBindLock}}">绑定</button>
+    <button class="button-action" type='primary' bindtap="unbindLock" disabled="{{!isBindLock}}">解绑</button>
+  </view>
+
+  <view class='row'>
+    <button class="button-action" type='primary' bindtap="queryBindState">查询状态</button>
+    <button class="button-action" type='primary' bindtap="queryBattery">查询电量</button>
+  </view>
+
+  <view class='row'>
+    <button class="button-action" type='primary' bindtap="queryNbImei" disabled="{{!isNbLock}}">查询IMEI</button>
+    <button class="button-action" type='primary' bindtap="login" disabled="{{!isBindLock | !isFpLock}}">进登录态</button>
+  </view>
+
+  <view class='row'>
+    <button class="button-action" type='primary' bindtap="openLock" disabled="{{!isBindLock}}">蓝牙解锁</button>
+    <button class="button-action" type='primary' bindtap="syncClock" disabled="{{!isBindLock}}">同步时钟</button>
+  </view>
+
+  <view class='row'>
+    <button class="button-action" type='primary' bindtap="addPincode" disabled="{{!isBindLock | isPincodeAdd}}">添加密码</button>
+    <button class="button-action" type='primary' bindtap="delPincode" disabled="{{!isBindLock | !isPincodeAdd}}">删除密码</button>
+  </view>
+
+  <view class='row'>
+    <button class="button-action" type='primary' bindtap="addRfCard" disabled="{{!isBindLock | isRfCardAdd}}">添加房卡</button>
+    <button class="button-action" type='primary' bindtap="delRfCard" disabled="{{!isBindLock | !isRfCardAdd}}">删除房卡</button>
+  </view>
+
+  <view class='row'>
+    <button class="button-action" type='primary' bindtap="addFingerprint" disabled="{{!isBindLock | !isFpLock | isFingerprintAdd}}">添加指纹</button>
+    <button class="button-action" type='primary' bindtap="delFingerprint" disabled="{{!isBindLock | !isFpLock | !isFingerprintAdd}}">删除指纹</button>
+  </view>
+
+  <view class='row'>
+    <button class="button-action" type='primary' bindtap="changeAdminPincode" disabled="{{!isBindLock | !isFpLock}}">修改管理密码</button>
+  </view>
+</view>

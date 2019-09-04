@@ -1,0 +1,7 @@
+{
+    "navigationBarTitleText": "蓝牙配对",
+    "window": {
+      "enablePullDownRefresh": false
+    },
+  "usingComponents": {}
+}

@@ -1,0 +1,46 @@
+/* miniprogram/pages/bleScan/bleScan.wxss */
+.container {
+  align-items: center;
+  width: 100%;
+}
+.header{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 18rpx;
+  padding-bottom: 18rpx;
+}
+.bolder_color{
+  height: 2rpx;
+  width: 100%;
+  background-color: rgb(241, 236, 236);
+}
+.dot_header{
+  width: 8rpx;
+  height: 8rpx;
+  padding-left: 24rpx;
+  padding-right: 24rpx;
+}
+.button{
+  width: 32rpx;
+  height: 32rpx;
+}
+.header_text{
+  font-size: 28rpx;
+}
+.list-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 20rpx 0 20rpx 0;
+  box-sizing: border-box;
+  border: 16rpx solid #000;
+  border-style: none none solid none;
+  border-bottom-color: rgb(240, 236, 236);
+}
+.list-item:last-child {
+  border-style: none;
+}
