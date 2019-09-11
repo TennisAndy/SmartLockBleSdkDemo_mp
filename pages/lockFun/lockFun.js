@@ -36,6 +36,7 @@ Page({
     isPincodeAdd: false,
     isRfCardAdd: false,
     isFingerprintAdd: false,
+    lockModel: 0,
     lock: {},
   },
 
@@ -61,7 +62,8 @@ Page({
     })
     that.setData({
       lock: lock,
-      isNbLock: lockModel > 30 && lockModel < 49 || lockModel > 80 && lockModel < 89,
+      lockModel: lockModel,
+      isNbLock: lockModel > 30 && lockModel < 49 || lockModel > 80 && lockModel < 89 || lockModel > 100 && lockModel < 109,
       isFpLock: lockModel > 70 && lockModel < 89
     })
   },
@@ -95,7 +97,9 @@ Page({
     if (isConnected) {
       wx.closeBLEConnection({
         deviceId: connectedDeviceId,
-        success: function(res) {},
+        success: function(res) {
+          isConnected = false
+        },
       })
     }
   },
@@ -436,7 +440,7 @@ Page({
         }
       case 61:
         {
-          if (that.data.isFpLock) {
+          if (lockModel > 70) {
             that.onAddRfCard()
           } else {
             wx.showModal({
@@ -610,7 +614,7 @@ Page({
                         }
                       })
                     } else {
-                      if (that.data.isFpLock) {
+                      if (lockModel > 70) {
                         if (data.data.isValid) {
                           wx.showModal({
                             title: '提示',
@@ -644,7 +648,7 @@ Page({
                   }
                 case 'reportPincodeResult':
                   {
-                    if (that.data.isFpLock) {
+                    if (lockModel > 70) {
                       if (data.data.isValid) {
                         wx.showModal({
                           title: '提示',
@@ -992,7 +996,7 @@ Page({
                     that.setData({
                       isRfCardAdd: true
                     })
-                    if (that.data.isFpLock) {
+                    if (lockModel > 70) {
                       wx.showModal({
                         title: '提示',
                         content: `添加房卡成功，序号${rfCardIndex}！`,
@@ -1024,7 +1028,7 @@ Page({
                     that.setData({
                       isRfCardAdd: false
                     })
-                    if (that.data.isFpLock) {
+                    if (lockModel > 70) {
                       wx.showModal({
                         title: '提示',
                         content: `删除房卡成功，序号${rfCardIndex}！`,

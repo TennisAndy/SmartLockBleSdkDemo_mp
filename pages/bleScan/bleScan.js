@@ -65,14 +65,14 @@ Page({
                     var macStr = it.adData.substring(4, 16).toUpperCase()
                     //console.log('macStr', macStr)
                     it.mac = macStr.substr(10, 2) + ':' + macStr.substr(8, 2) + ':' + macStr.substr(6, 2) + ':' + macStr.substr(4, 2) + ':' + macStr.substr(2, 2) + ':' + macStr.substr(0, 2)
-                    if (it.adData.substring(0, 2) == '01') {
+                    if (it.adData.substring(1, 2) == '1') {
                       it.isLightOn = true
                       it.textColor = 'green'
                     } else {
                       it.isLightOn = false
                       it.textColor = 'black'
                     }
-                    if (it.adData.substring(2, 4) == '01') {
+                    if (it.adData.substring(3, 4) == '1') {
                       it.textColor = 'pink'
                       it.isBind = true
                     } else {

@@ -11,7 +11,7 @@
         <image style="width:30%;height:100rpx" mode="aspectFit" src="../../images/image_lock.png"></image>
         <view style="display:flex;flex-direction:column;width:50%">
           <text style="font-size:medium;word-break:break-all">{{item.lockType}}</text>
-          <text style="font-size:x-small;color:gray;word-break:break-all">蓝牙: {{item.name}}</text>
+          <text style="font-size:x-small;color:{{item.textColor}};word-break:break-all">蓝牙: {{item.name}}</text>
           <text style="font-size:x-small;color:gray;word-break:break-all">信号: {{item.RSSI}}</text>
         </view>
         <button size="mini" disabled="{{item.isBind}}" type="default">添加</button>
