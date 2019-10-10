@@ -21,27 +21,27 @@
 
   <view class='row'>
     <button class="button-action" type='primary' bindtap="queryBindState">查询状态</button>
-    <button class="button-action" type='primary' bindtap="queryBattery">查询电量</button>
+    <button class="button-action" type='primary' bindtap="queryBattery" disabled="{{isJack}}">查询电量</button>
   </view>
 
   <view class='row'>
     <button class="button-action" type='primary' bindtap="queryNbImei" disabled="{{!isNbLock}}">查询IMEI</button>
-    <button class="button-action" type='primary' bindtap="login" disabled="{{!isBindLock | lockModel < 70}}">进登录态</button>
+    <button class="button-action" type='primary' bindtap="login" disabled="{{!isBindLock | lockModel < 70 | isJack}}">进登录态</button>
   </view>
 
   <view class='row'>
-    <button class="button-action" type='primary' bindtap="openLock" disabled="{{!isBindLock}}">蓝牙解锁</button>
-    <button class="button-action" type='primary' bindtap="syncClock" disabled="{{!isBindLock}}">同步时钟</button>
+    <button class="button-action" type='primary' bindtap="openLock" disabled="{{!isBindLock}}">{{isJack ? '蓝牙上电' : '蓝牙解锁'}}</button>
+    <button class="button-action" type='primary' bindtap="syncClock" disabled="{{!isBindLock | isJack}}">同步时钟</button>
   </view>
 
   <view class='row'>
-    <button class="button-action" type='primary' bindtap="addPincode" disabled="{{!isBindLock | isPincodeAdd}}">添加密码</button>
-    <button class="button-action" type='primary' bindtap="delPincode" disabled="{{!isBindLock | !isPincodeAdd}}">删除密码</button>
+    <button class="button-action" type='primary' bindtap="addPincode" disabled="{{!isBindLock | isPincodeAdd | isJack}}">添加密码</button>
+    <button class="button-action" type='primary' bindtap="delPincode" disabled="{{!isBindLock | !isPincodeAdd | isJack}}">删除密码</button>
   </view>
 
   <view class='row'>
-    <button class="button-action" type='primary' bindtap="addRfCard" disabled="{{!isBindLock | isRfCardAdd}}">添加房卡</button>
-    <button class="button-action" type='primary' bindtap="delRfCard" disabled="{{!isBindLock | !isRfCardAdd}}">删除房卡</button>
+    <button class="button-action" type='primary' bindtap="addRfCard" disabled="{{!isBindLock | isRfCardAdd | isJack}}">添加房卡</button>
+    <button class="button-action" type='primary' bindtap="delRfCard" disabled="{{!isBindLock | !isRfCardAdd | isJack}}">删除房卡</button>
   </view>
 
   <view class='row'>
@@ -51,5 +51,6 @@
 
   <view class='row'>
     <button class="button-action" type='primary' bindtap="changeAdminPincode" disabled="{{!isBindLock | !isFpLock}}">修改管理密码</button>
+    <button class="button-action" type='primary' bindtap="genOfflinePincode" disabled="{{!isBindLock | isJack}}">生成离线密码</button>
   </view>
 </view>

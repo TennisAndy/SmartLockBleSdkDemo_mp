@@ -247,6 +247,8 @@ const getLockModel = name => {
       return 90 + parseInt(name.substr(5, 6))
     } else if (name.indexOf("WSL_D") == 0) {
       return 100 + parseInt(name.substr(5, 6))
+    } else if (name.indexOf("WSJ_Q") == 0) {
+      return 10000 + parseInt(name.substr(5, 6))
     } else {
       return 0
     }
@@ -294,6 +296,8 @@ const getLockType = model => {
     return '蓝牙指纹锁'
   } else if (model > 80 && model <= 89) {
     return 'NB指纹锁'
+  } else if (model > 10000 && model <= 10009) {
+    return '取电开关'
   }
 }
 
@@ -323,6 +327,8 @@ const getLockName = (mac, model) => {
     return `WSL_O${model % 10}_${name}`
   } else if (model > 100 && model <= 109) {
     return `WSL_D${model % 10}_${name}`
+  } else if (model > 10000 && model <= 10009) {
+    return `WSJ_Q${model % 10}_${name}`
   }
 }
 

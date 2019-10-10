@@ -1,3 +1,4 @@
+const plugin = requirePlugin("myPlugin")
 const config = require('config')
 const noop = function noop() {};
 const RequestError = (function () {
@@ -18,6 +19,7 @@ App({
   onLaunch(options) {
     console.debug('[AppOnLaunch]', options)
     this.globalData.sysinfo = wx.getSystemInfoSync()
+    plugin.init('appId', 'appKey')
   },
 
   onShow(options) {

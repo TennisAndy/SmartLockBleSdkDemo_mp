@@ -64,7 +64,8 @@ Page({
       lock: lock,
       lockModel: lockModel,
       isNbLock: lockModel > 30 && lockModel < 49 || lockModel > 80 && lockModel < 89 || lockModel > 100 && lockModel < 109,
-      isFpLock: lockModel > 70 && lockModel < 89
+      isFpLock: lockModel > 70 && lockModel < 89,
+      isJack: lockModel > 10000 && lockModel < 10009
     })
   },
 
@@ -80,7 +81,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    
+
   },
 
   /**
@@ -215,6 +216,33 @@ Page({
     that.initBluetooth()
   },
 
+  genOfflinePincode: function() {
+    var that = this
+    wx.showLoading({
+      title: '生成离线密码中',
+    })
+    var startTime = util.getLocalTime(8)
+    var endTime = new Date(startTime.getTime() + 5 * 60 * 1000) //有效期5分钟
+    plugin.genOfflinePincode(lockDevice.name, lockMac, basecode, 0, startTime, endTime)
+      .then(function(data) {
+        console.debug('data', data)
+        wx.hideLoading()
+        if (data.code == 200) {
+          wx.showModal({
+            title: '提示',
+            content: `生成离线密码${data.data}，有效期至${util.formatTime(endTime)}！`,
+            showCancel: false
+          })
+        } else {
+          wx.showModal({
+            title: '提示',
+            content: data.data,
+            showCancel: false
+          })
+        }
+      })
+  },
+
   onQueryBindState: function() {
     var that = this
     wx.showLoading({
@@ -273,7 +301,7 @@ Page({
   onOpenLock: function() {
     var that = this
     wx.showLoading({
-      title: '解锁中',
+      title: that.data.isJack ? '上电中' : '解锁中',
     })
 
     var bytes = plugin.sendOpenLockP1(lockDevice.name, basecode)
@@ -721,14 +749,14 @@ Page({
                       if (data.data.isBind) {
                         wx.showModal({
                           title: data.data.mac,
-                          content: '此门锁已经硬件绑定！',
+                          content: '此设备已经硬件绑定！',
                           showCancel: false,
                           success: function(res) {}
                         })
                       } else {
                         wx.showModal({
                           title: data.data.mac,
-                          content: '此门锁硬件未绑定！',
+                          content: '此设备硬件未绑定！',
                           showCancel: false,
                           success: function(res) {}
                         })
@@ -842,7 +870,7 @@ Page({
                       if (taskId == 41) {
                         wx.showModal({
                           title: '提示',
-                          content: '解锁失败！',
+                          content: that.data.isJack ? '上电失败！' : '解锁失败！',
                           showCancel: false,
                           success: function(res) {}
                         })
@@ -876,7 +904,7 @@ Page({
                       if (taskId == 41) {
                         wx.showModal({
                           title: '提示',
-                          content: '解锁失败！',
+                          content: that.data.isJack ? '上电失败！' : '解锁失败！',
                           showCancel: false,
                           success: function(res) {}
                         })
@@ -894,7 +922,7 @@ Page({
                     isLockLogin = true
                     if (taskId == 41) {
                       wx.showToast({
-                        title: '解锁成功！',
+                        title: that.data.isJack ? '上电成功！' : '解锁成功！',
                       })
                     } else if (taskId == 32) {
                       wx.showToast({
@@ -1002,7 +1030,7 @@ Page({
                         content: `添加房卡成功，序号${rfCardIndex}！`,
                         showCancel: false
                       })
-                    }else{
+                    } else {
                       wx.showModal({
                         title: '提示',
                         content: `添加房卡成功，卡号${rfCardId}！`,
