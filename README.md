@@ -26,6 +26,7 @@
   注明申请小程序主体信息，联系方式，appId，应用名称，应用说明，我们将于1～2个工作日处理。
 
 ### 1.2.插件初始化
+<pre><code>
   const plugin = requirePlugin("myPlugin")
   ...
   App({
@@ -42,7 +43,7 @@
       }
     })
   })
-  
+</code></pre> 
 ***
 ## 2. 通用指令接口
 
