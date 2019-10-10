@@ -3,7 +3,7 @@
 此插件封装了吾家智锁蓝牙通信协议部分，通过接口函数轻松生成蓝牙指令，开发者只需将指令通过蓝牙发送出去，再解析指令回复获取结果。
 >功能示例
 >* 1.扫描锁蓝牙
-![链接](./bleScan.jpeg)
+![链接](./bleScan.png)
 >* 2.WSL_Ux蓝牙密码锁系列
 ![链接](./wsl_ux.jpeg)
 >* 3.WSL_Nx,WSL_Mx NB密码锁系列
@@ -12,10 +12,37 @@
 ![链接](./wsl_fx.jpeg)
 >* 5.WSL_Cx NB指纹锁系列
 ![链接](./wsl_cx.jpeg)
+>* 6.WSL_Ox蓝牙密码锁系列
+![链接](./wsl_ox.jpeg)
+>* 7.WSL_Dx NB密码锁系列
+![链接](./wsl_dx.jpeg)
+>* 8.WSJ_Qx 蓝牙取电开关系列
+![链接](./wsj_qx.jpeg)
 
 ***
 ## 1.sdk安装
-微信公众平台添加插件"吾家智锁sdk"，提交申请，等待审核即可。
+### 1.1.申请使用插件
+  微信公众平台添加插件"吾家智锁sdk"，提交申请，并发送邮件至logsoul@qq.com，申请appKey，
+  注明申请小程序主体信息，联系方式，appId，应用名称，应用说明，我们将于1～2个工作日处理。
+
+### 1.2.插件初始化
+  const plugin = requirePlugin("myPlugin")
+  ...
+  App({
+  onLaunch(options) {
+    console.debug('[AppOnLaunch]', options)
+    this.globalData.sysinfo = wx.getSystemInfoSync()
+    plugin.init('appId', 'appKey')
+    .then(function(res){
+      console.log('res', res)
+      if(res.code != 200){ //sdk验证失败，将无法使用生成离线密码功能
+        wx.showToast({
+          title: res.data.msg,
+        })
+      }
+    })
+  })
+  
 ***
 ## 2. 通用指令接口
 
@@ -119,13 +146,13 @@
   >* return: 
     >>code: int类型，200表示添加成功，300表示添加失败 
 
-  注意：密码开锁结果上报，接口名称reportPincodeResult，数据结构如下：
-  {
-    > pincode: int类型，表示开锁密码
-    > time: date类型，表示开锁时间
-    > type: int类型, 表示密码类型
-    > isValid: bool类型，表示密码是否开锁成功
-  }   
+  注意：密码开锁结果上报，接口名称reportPincodeResult，json数据结构如下：
+  > {
+    >>pincode: int类型，表示开锁密码
+    >>time: date类型，表示开锁时间
+    >>type: int类型, 表示密码类型
+    >>isValid: bool类型，表示密码是否开锁成功
+  > }   
 
 ### 3.3 删除限时密码 delPincode
   >function delPincode(devName, basecode, pincode, index)
@@ -152,12 +179,12 @@
     >>code: int类型，200表示添加成功，300表示添加失败    
 
   注意：刷卡开锁结果上报，接口名称reportRfCardResult，数据结构如下：
-  {
-    > cardId: int类型，表示房卡卡号
-    > time: date类型，表示开锁时间
-    > type: int类型, 表示房卡类型
-    > isValid: bool类型，表示房卡是否开锁成功
-  } 
+  > {
+    >>cardId: int类型，表示房卡卡号
+    >>time: date类型，表示开锁时间
+    >>type: int类型, 表示房卡类型
+    >>isValid: bool类型，表示房卡是否开锁成功
+  > } 
   
 ### 3.5 删除限时房卡 delRfCard
   >function delRfCard(devName, basecode, cardId, index)
@@ -170,7 +197,7 @@
   >* return: 
     >>code: int类型，200表示删除成功，300表示删除失败    
 
-## 4. 蓝牙指纹锁WSL_Fx，NB指纹锁WSL_Cx系列锁指令接口
+## 4. 蓝牙密码锁WSL_Ox，NB密码锁WSL_Dx，蓝牙指纹锁WSL_Fx，NB指纹锁WSL_Cx系列锁指令接口
 
 ### 4.1 登录态 login1/login2
   >function login1(devName, basecode)
@@ -248,7 +275,7 @@
     >>code: int类型，100时，表示进入添卡模式，200表示添加成功，300表示添加失败
     >>data: object类型，其中msg表示提示信息   
 注意：指纹锁系列添加房卡，是先发送指令进入添卡模式，再刷卡完成添加。
-  >密码开锁结果上报，接口名称reportRfCardResult，数据结构如下：
+  >密码开锁结果上报，接口名称reportRfCardResult，json数据结构如下：
   {
     > index: int类型，表示房卡序号
     > time: date类型，表示开锁时间
@@ -308,7 +335,7 @@
     >>code: int类型，200表示修改成功，300表示修改失败  
 注意：指纹锁初始状态下管理密码为12345678，因此绑定门锁后，建议立即修改管理密码。
 
-## 5. Nx,Mx,Cx NB系列锁指令接口
+## 5. Nx,Mx,Cx,Dx NB系列锁指令接口
 
 ### 5.1 获取NB模组IMEI queryNbImei
   >function queryNbImei(devName)
@@ -318,4 +345,42 @@
   >* return data: 
     >>imei: String类型，表示NB模组设备imei
 
+## 6. WSJ_Qx 蓝牙取电开关指令接口
 
+### 6.1 蓝牙上电 sendOpenLockP1/sendOpenLockP2 
+  >function sendOpenLockP1(devName, basecode)
+  >* params: 
+    >>devName: String类型，取电开关名称
+    >>basecode: int类型，蓝牙通信加密码  
+
+   >* return data: 
+    >>randomN: int类型，上电第二步加密参数
+
+  >function sendOpenLockP2(devName, basecode, randomN)
+  >* params: 
+    >>devName: String类型，取电开关蓝牙名称
+    >>basecode: int类型，蓝牙通信加密码  
+    >>randomN: int类型，上电第一步返回
+
+  >* return: 
+    >>code: int类型，200表示蓝牙上电成功，300表示蓝牙上电失败
+
+注意：蓝牙取电开关，当蓝牙上电后，蓝牙断开后延时5分钟断开。
+
+## 7. 门锁离线密码生成接口
+
+### 7.1 生成离线密码 genOfflinePincode
+  >function genOfflinePincode(devName, lockMac, basecode, pwdType, startTime, endTime)
+  >* params: 
+    >>devName: String类型，锁蓝牙名称
+    >>lockMac: String类型，锁蓝牙MAC
+    >>basecode: int类型，蓝牙通信加密码  
+    >>pwdType: int类型，离线密码类型，0是限时，1是单次，3是清理密码
+    >>startTime: Date类型，离线密码生效时间，取本地时钟，例如中国为UTC+8时间，忽略即时生效
+    >>endTime: Date类型，离线密码失效时间，取本地时钟，例如中国为UTC+8时间
+
+   >* return data: 
+    >>code: int类型，200表示生成功能，其他失败
+    >>data: String类型，离线开锁密码或失败信息
+
+注意：若appId或appKey非法，则sdk init不成功，无法成功调用此接口。
