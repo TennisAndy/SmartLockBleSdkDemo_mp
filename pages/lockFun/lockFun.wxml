@@ -53,4 +53,15 @@
     <button class="button-action" type='primary' bindtap="changeAdminPincode" disabled="{{!isBindLock | !isFpLock}}">修改管理密码</button>
     <button class="button-action" type='primary' bindtap="genOfflinePincode" disabled="{{!isBindLock | isJack}}">生成离线密码</button>
   </view>
+
+  <view class='row'>
+    <button class="button-action" type='primary' bindtap="queryLockSlotState" disabled="{{!isBindLock}}">查询方舌状态</button>
+    <button class="button-action" type='primary' bindtap="queryLockUnlockState" disabled="{{!isBindLock}}">查询门锁状态</button>
+  </view>
+
+  <view class='row'>
+    <button class="button-action" type='primary' bindtap="changeLockUnlockState" disabled="{{!isBindLock}}">{{isUnloked ? '退出常开模式' : '进入常开模式'}}</button>
+    <button class="button-action" type='primary' bindtap="changeLockMutedState" disabled="{{!isBindLock}}">{{isMuted ? '退出静音模式' : '进入静音模式'}}</button>
+  </view>
+
 </view>

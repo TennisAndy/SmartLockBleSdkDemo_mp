@@ -1,4 +1,4 @@
-# 吾家智锁sdk
+# 吾家智锁sdk v1.4.0
 
 此插件封装了吾家智锁蓝牙通信协议部分，通过接口函数轻松生成蓝牙指令，开发者只需将指令通过蓝牙发送出去，再解析指令回复获取结果。
 >功能示例
@@ -385,3 +385,44 @@
     >>data: String类型，离线开锁密码或失败信息
 
 注意：若appId或appKey非法，则sdk init不成功，无法成功调用此接口。
+
+## 8. 门锁定制功能指令
+![链接](./extra_fun.jpg)
+蓝牙密码锁WSL_Ox，NB密码锁WSL_Dx，蓝牙指纹锁WSL_Fx，NB指纹锁WSL_Cx系列锁定制指令，请确认您的锁是否支持此部分指令，若不支持，则锁蓝牙指令不会回复。
+### 8.1 查询门锁方舌状态 queryLockSlotState
+  >function queryLockSlotState(devName)
+  >* params: 
+    >>devName: String类型，锁蓝牙名称
+
+   >* return data: 
+    >>code: int类型，200表示查询成功，其他失败
+    >>state: int类型，表示锁方舌状态 0为关闭，1为打开
+
+### 8.2 查询门锁开关状态 queryLockUnlockState
+  >function queryLockUnlockState(devName)
+  >* params: 
+    >>devName: String类型，锁蓝牙名称
+
+   >* return data: 
+    >>code: int类型，200表示查询成功，其他失败
+    >>state: int类型，表示锁开关状态 0为关闭，1为打开
+
+### 8.3 设置常开模式 setLockUnlockState
+  >function setLockUnlockState(devName, isUnlock)
+  >* params: 
+    >>devName: String类型，锁蓝牙名称
+    >>isUnlock: Boolean类型，表示是否常开
+
+   >* return data: 
+    >>code: int类型，200表示查询成功，其他失败
+    >>state: int类型，表示锁常开状态 0为关闭常开，非0为打开常
+
+### 8.4 设置静音模式 setLockUnlockState
+  >function setLockUnlockState(devName, isMuted)
+  >* params: 
+    >>devName: String类型，锁蓝牙名称
+    >>isMuted: Boolean类型，表示是否静音
+
+   >* return data: 
+    >>code: int类型，200表示查询成功，其他失败
+    >>state: int类型，表示锁静音状态， 0为打开，1为关闭
