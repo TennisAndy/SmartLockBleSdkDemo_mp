@@ -38,6 +38,7 @@ Page({
     isFingerprintAdd: false,
     isUnloked: false,
     isMuted: false,
+    isNbEnable: true,
     lockModel: 0,
     lock: {},
   },
@@ -239,6 +240,12 @@ Page({
   changeLockMutedState: function () {
     var that = this
     taskId = 102
+    that.initBluetooth()
+  },
+
+  changeLockNbState: function () {
+    var that = this
+    taskId = 111
     that.initBluetooth()
   },
 
@@ -478,6 +485,16 @@ Page({
     that.sendBytes(bytes)
   },
 
+  onChangeLockNbState: function () {
+    var that = this
+    wx.showLoading({
+      title: that.data.isNbEnable ? '禁用NB功能' : '打开NB功能',
+    })
+    var bytes = plugin.setNbFun(lockDevice.name, !that.data.isNbEnable)
+    console.debug('bytes', bytes)
+    that.sendBytes(bytes)
+  },
+
   doWork: function () {
     var that = this
     switch (taskId) {
@@ -570,6 +587,9 @@ Page({
       case 102: {
         that.onChangeLockMutedState()
         break
+      }
+      case 111: {
+        this.onChangeLockNbState()
       }
       default: {
 
@@ -864,6 +884,28 @@ Page({
                     content: `此NB设备IMEI为${data.data.imei}`,
                     showCancel: false,
                     success: function (res) {}
+                  })
+                  break
+                }
+                case 'setNbFun': {
+                  wx.hideLoading()
+                  if (data.code != 200) {
+                    wx.showModal({
+                      title: '提示',
+                      content: '设置Nb功能失败！',
+                      showCancel: false,
+                      success: function (res) {}
+                    })
+                    break
+                  }
+                  taskId = 0
+                  wx.showModal({
+                    title: '提示',
+                    content: that.data.isNbEnable ? 'NB功能已禁用' : 'NB功能已打开',
+                    showCancel: false,
+                  })
+                  that.setData({
+                    isNbEnable: !that.data.isNbEnable
                   })
                   break
                 }

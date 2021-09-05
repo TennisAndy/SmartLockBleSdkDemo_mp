@@ -63,5 +63,8 @@
     <button class="button-action" type='primary' bindtap="changeLockUnlockState" disabled="{{!isBindLock}}">{{isUnloked ? '退出常开模式' : '进入常开模式'}}</button>
     <button class="button-action" type='primary' bindtap="changeLockMutedState" disabled="{{!isBindLock}}">{{isMuted ? '退出静音模式' : '进入静音模式'}}</button>
   </view>
+  <view class='row'>
+    <button class="button-action" type='primary' bindtap="changeLockNbState" disabled="{{!isBindLock}}">{{isNbEnable ? '禁用NB功能' : '打开NB功能'}}</button>
+  </view>
 
 </view>

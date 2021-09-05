@@ -20,6 +20,14 @@ App({
     console.debug('[AppOnLaunch]', options)
     this.globalData.sysinfo = wx.getSystemInfoSync()
     plugin.init('appId', 'appKey')
+    .then(function(res){
+      console.log('res', res)
+      if(res.code != 200){
+        wx.showToast({
+          title: res.data.msg,
+        })
+      }
+    })
   },
 
   onShow(options) {
