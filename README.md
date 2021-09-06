@@ -1,4 +1,4 @@
-# 吾家智锁sdk v1.4.0
+# 吾家智锁sdk v1.5.0
 
 此插件封装了吾家智锁蓝牙通信协议部分，通过接口函数轻松生成蓝牙指令，开发者只需将指令通过蓝牙发送出去，再解析指令回复获取结果。
 >功能示例
@@ -26,7 +26,6 @@
   注明申请小程序主体信息，联系方式，appId，应用名称，应用说明，我们将于1～2个工作日处理。
 
 ### 1.2.插件初始化
-<pre><code>
   const plugin = requirePlugin("myPlugin")
   ...
   App({
@@ -43,7 +42,7 @@
       }
     })
   })
-</code></pre> 
+  
 ***
 ## 2. 通用指令接口
 
@@ -345,6 +344,17 @@
 
   >* return data: 
     >>imei: String类型，表示NB模组设备imei
+
+### 5.2 动态打开或禁用NB模组 setNbFun
+  >function setNbFun(devName, enable)
+  >* params: 
+    >>devName: String类型，锁蓝牙名称
+    >>enable: Boolean类型，表示是否开启，true为开启（绑定后默认打开），false为禁用
+
+  >* return data: 
+    >>code: int类型，200表示设置成功，300表示失败
+    >>msg: String类型，表示设置NB功能命令情况
+  注意：1.具备NB模组的锁，绑定后NB功能默认打开。2.设置此指令前，需要先进入登录态(详见4.1)，否则会报错'login state off'
 
 ## 6. WSJ_Qx 蓝牙取电开关指令接口
 
